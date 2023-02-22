@@ -21,6 +21,7 @@ def main(url):
     print(steps)
 
     # will return array of ingredients and steps
+    # need to get prep time and servings
 
 if __name__ == '__main__':
     # not sure if input is a url on command line
