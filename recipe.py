@@ -2,12 +2,12 @@
 from posixpath import split
 from nltk import ne_chunk, pos_tag, word_tokenize
 import fractions
-import regex
+import re
 import type_checker
 
 class recipe:
     def __init__(self,ingredients,steps):
-        self.ingredient_dict = ingredients
+        self.ingredients = ingredients
         self.steps = []
         self.curr = 0
         # self.prep_time
@@ -41,20 +41,30 @@ class recipe:
             for substep in substeps:
                 self.steps.append(substep)
 
-    def print_curr(self):
+    def print_current_step(self):
         print(self.steps[self.curr])
 
     def change_step(self,n):
         # n is how many steps to move (+ for forward, - for backward)
         if self.curr + n >= len(self.steps):
-            print("Not enough steps left, but here's the last one:")
+            print("Not enough steps left, changing to last")
             self.curr = len(self.steps)-1
         elif self.curr + n < 0:
-            print("Can't move back that far, but here's the first step:")
+            print("Can't move back that far, changing to first:")
             self.curr = 0
         else:
             self.curr += n
-        self.print_curr()
+
+    def how_much(self,food):
+        for ing in self.ingredients:
+            if re.search(food,ing):
+                return "You need: " + ing
+        return "You dont need any " + food
+
+
+
+
+    
     
         
 
