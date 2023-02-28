@@ -2,11 +2,15 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 import json
+from dependency_parser import DependencyParser
 
 
 # returns list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
 # prep_time + cook_time = total_time
 def main(url):
+
+    dp = DependencyParser()
+
     # for now, have default url
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -14,12 +18,19 @@ def main(url):
     title = title.get_text()
     print(title)
 
-    
+    # Ingredients
     js = json.loads(soup.find('script', type='application/ld+json').text)
     ingredients = js[0]["recipeIngredient"]
     print(ingredients)
+    ingredients_data = dp.parse_ingredients(ingredients)
+    print(ingredients_data)
+
+
+    # Steps
     steps = [step["text"] for step in js[0]["recipeInstructions"]]
     print(steps)
+    steps_data = [dp.parse_step(step) for step in steps]
+    print(steps_data)
 
     # print(js)
     servings = js[0]["recipeYield"]
