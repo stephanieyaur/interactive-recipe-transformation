@@ -32,7 +32,7 @@ class DependencyParser:
             tokens[token.text] = t
         return tokens
 
-    # Returns a dictionary of ingredient -> amount given an array of all ingredients
+    # Returns a dictionary of ingredient -> IngredientData given an array of all ingredients
     def parse_ingredients(self, ingredientsArr):
 
         def dfs_amount(token):
@@ -68,3 +68,8 @@ class DependencyParser:
                     id.ingredient = dfs_ingredient(token)
             ingredients_data[id.ingredient] = id
         return ingredients_data
+
+    # Returns a StepData object given a step
+    def parse_step(self, stepArr):
+        # TODO
+        return
