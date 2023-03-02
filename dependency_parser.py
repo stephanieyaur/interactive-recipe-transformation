@@ -29,6 +29,7 @@ class DependencyParser:
             t["part-of-speech"] = token.dep_
             t["head"] = token.head
             t["children"] = [child for child in token.children]
+            t["index"] = token.i
             tokens[token.text] = t
         return tokens
 
@@ -36,36 +37,78 @@ class DependencyParser:
     def parse_ingredients(self, ingredientsArr):
 
         def dfs_amount(token):
-            if token["part-of-speech"] != "nummod":
-                if token["part-of-speech"] == "ROOT":
+            if not token or token["part-of-speech"] != "nummod":
+                if not token["text"] or token["part-of-speech"] in ["ROOT"]:
                     return ""
-                return token["text"]
+                tokenName = token["text"]
+                token["text"] = None
+                return tokenName
             else:
+                tokenName = token["text"]
+                token["text"] = None
                 headName = token["head"].text
-                return token["text"] + " " + dfs_amount(tokens[headName])
+                return tokenName + " " + dfs_amount(tokens[headName])
 
-        def dfs_ingredient(token):
-            if (token["part-of-speech"] != "compound" and token["part-of-speech"] != "ROOT") or token["part-of-speech"] == "compound" and tokens[token["children"][0].text]["part-of-speech"] == "nummod":
+        def dfs_ingredient_root(token):
+            if (not token["text"] or token["part-of-speech"] not in ["compound", "ROOT", "cc", "conj", "amod"]):
                 return ""
             else:
-                childName = token["children"][0].text #assume only 1 child for now
-                prev = dfs_ingredient(tokens[childName])
+                childName = token["children"][0].text if len(token["children"]) > 0 else None #assume only 1 child for now
+                tokenName = token["text"]
+                tokenIndex = token["index"]
+                token["text"] = None
+                prev = dfs_ingredient_root(tokens[childName]) if childName else ""
                 if prev != "":
-                    return prev + " " + token["text"]
+                    if tokenIndex > tokens[childName]["index"]:
+                        return prev + " " + tokenName
+                    else:
+                        return tokenName + " " + prev
                 else:
-                    return token["text"]
+                    return tokenName
+
+        def dfs_ingredient_not_root(token):
+            if (not token["text"] or token["part-of-speech"] not in ["compound", "amod", "dobj", "nsubj", "cc", "conj"]):
+                return ""
+            else:
+                tokenName = token["text"]
+                tokenIndex = token["index"]
+                token["text"] = None
+                childName = token["children"][0].text if len(token["children"]) > 0 else None# assume only 1 child for now
+                prev = dfs_ingredient_not_root(tokens[childName]) if childName else ""
+                if prev != "":
+                    if tokenIndex > tokens[childName]["index"]:
+                        return prev + " " + tokenName
+                    else:
+                        return tokenName + " " + prev
+                else:
+                    return tokenName
+
+        def ingredient_parameters(tokens):
+            parameters = ""
+            for tname in tokens:
+                if tokens[tname]["text"] != None and tokens[tname]["part-of-speech"] != "punct":
+                    parameters += tokens[tname]["text"] + " "
+            return parameters.strip()
 
 
         ingredients_data = {}
         for i in ingredientsArr:
             tokens = self.tokenize(i)
             id = IngredientData()
+            rootName = None
             for tname in tokens:
                 token = tokens[tname]
-                if token["part-of-speech"] == "nummod":
+                if not token["text"]:
+                    continue
+                elif token["part-of-speech"] == "nummod":
                     id.amount = dfs_amount(token)
+                if token["part-of-speech"] in ["dobj", "nsubj"]:
+                    id.ingredient = dfs_ingredient_not_root(token)
                 elif token["part-of-speech"] == "ROOT":
-                    id.ingredient = dfs_ingredient(token)
+                    rootName = token["text"]
+            if id.ingredient == None:
+                id.ingredient = dfs_ingredient_root(tokens[rootName])
+            id.parameters = ingredient_parameters(tokens)
             ingredients_data[id.ingredient] = id
         return ingredients_data
 

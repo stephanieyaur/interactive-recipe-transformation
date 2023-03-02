@@ -1,6 +1,22 @@
 pip install spacy
 python -m spacy download en_core_web_sm
 
+Strategy for parse_ingredients
+- Look for the amount by finding the first occurence of a nummod in the sentence and traverse through heads to find more words related to amounts - stop once reach a word that is not a nummod or is a ROOT word (don't add) or is a dobj or nsubj (don't add)
+- Look for the ingredient by seeing if there are 
+  1. dobj and adding its children until no more valid children (not nummod or punct)
+  2. nsubj and adding its children until no more valid children (not nummod or punct)
+  3. if none of those, then it's the root and add its children until no more valid children (not nummod or punct)
+- Look for the parameters
+  1. Unused root and adding unused children that aren't punct
+
+Fix 1 cup dried bread crumbs
+Fix salt and pepper, to taste
+Fix 2 tablespoons brown sugar
+Fix 2 tablespoons prepared mustard
+
+
+
 Potential questions:
 
 What is the first step?
