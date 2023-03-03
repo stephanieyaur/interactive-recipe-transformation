@@ -39,6 +39,9 @@ class recipe:
         for step in steps:
             substeps = step.split('. ')
             for substep in substeps:
+                ## TODO ##
+                # Parse steps (stanford dependency parser?)
+                # verb is cooking method, DO is ingredient, IO will have tools (and maybe other ingredients)
                 self.steps.append(substep)
 
     def print_current_step(self):
