@@ -1,20 +1,34 @@
 # Dependency parser takes in a step and finds the cooking action, ingredients, tools/utensils, parameters (time/temp)
 
+from json import tool
 import spacy
 import type_checker
 
 class StepData:
     def __init__(self):
-        self.cookingAction = None
+        self.cookingAction = []
         self.ingredients = [] #could be ingredients or tool liks
         self.tools = [] #could be utensils or appliances - "oven", "medium sized saucepan"
         self.parameters = [] #action parameters "fast", "until creamy" etc.
+
+
+    def __repr__(self) -> str:
+        return "\nCooking action: " + str(self.cookingAction) + "\ningredients: " + str(self.ingredients) + "\ntools: " + str(self.tools) + "\nparameters: " + str(self.parameters)
 
 class IngredientData:
     def __init__(self):
         self.ingredient = None
         self.amount = None
         self.parameters = None
+
+    def __repr__(self) -> str:
+        if self.parameters:
+            pa = self.parameters
+        else:
+            pa = ""
+
+        
+        return "\n\ningredient: " + str(self.ingredient) + "\namount: " + str(self.amount) + "\nparameters: " + pa
 
 class DependencyParser:
     def __init__(self):
@@ -127,18 +141,18 @@ class DependencyParser:
         tokens = self.tokenize(step)
         for tname in tokens:
             token = tokens[tname]
+            chunk = self.chunker(token["text"],step)
             if not token["text"]:
                 continue
             elif token["text"].lower() in type_checker.methods:
-                if self.chunker(token["text"],step) not in sd.cookingAction:
-                    sd.cookingAction.append(self.chunker(token["text"],step))
+                if chunk not in sd.cookingAction:
+                    sd.cookingAction.append(chunk)
             elif token["part-of-speech"] in ["dobj","conj"]:
-                if self.chunker(token["text"],step) not in sd.ingredients:
-                    sd.ingredients.append(self.chunker(token["text"],step))
+                if chunk not in sd.ingredients:
+                    sd.ingredients.append(chunk)
             elif token["part-of-speech"] == "pobj":
-                if self.chunker(token["text"],step) not in sd.tools:
-                    sd.tools.append(self.chunker(token["text"],step))
+                if chunk not in sd.tools:
+                    sd.tools.append(chunk)
             elif token["part-of-speech"] == "advmod":
                 sd.parameters.append(token["text"])
-
         return sd
