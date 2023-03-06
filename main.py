@@ -1,16 +1,43 @@
 import sys
 from bs4 import BeautifulSoup
 import requests
+from question import *
+from global_vars import *
 import json
 from dependency_parser import DependencyParser
+import numpy as np
 
+def main():
+    # not sure if input is a url on command line
+    if len(sys.argv) > 1:
+        url = str(sys.argv[1])
+    else:
+        # main("https://www.foodnetwork.com/recipes/ina-garten/meat-loaf-recipe-1921718")
+        url = "https://www.allrecipes.com/recipe/16354/easy-meatloaf/"
+    title, ingredients, steps, prep_time, cook_time, total_time = get_recipe(url)
 
-# returns list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
+    # process steps
+    str_steps = ". ".join(steps)
+    str_steps = str_steps.replace(".", ";")
+    steps = re.split(r';', str_steps)
+    steps = [i.strip() for i in steps if i]
+    print("STEPS")
+    print(steps)
+
+    # set global vars
+    global_vars.url = url
+    global_vars.title = title
+    global_vars.ingredients = ingredients
+    global_vars.steps = steps
+    global_vars.prep_time = prep_time
+    global_vars.cook_time = cook_time
+    global_vars.total_time = total_time
+    get_response("blah blah")
+
+# returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
 # prep_time + cook_time = total_time
-def main(url):
-
+def get_recipe(url):
     dp = DependencyParser()
-
     # for now, have default url
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -40,7 +67,7 @@ def main(url):
     cook_time = convert_time(js[0]["cookTime"])
     total_time = convert_time(js[0]["totalTime"])
 
-    return ingredients, steps, prep_time, cook_time, total_time
+    return title, ingredients, steps, prep_time, cook_time, total_time
 
 # converts time to string containing just numerical value (in minutes)
 # e.g. "PT15M" changes into "15"
@@ -54,9 +81,4 @@ def convert_time(input):
 
 
 if __name__ == '__main__':
-    # not sure if input is a url on command line
-    if len(sys.argv) > 1:
-        main(str(sys.argv[1]))
-    else:
-        # main("https://www.foodnetwork.com/recipes/ina-garten/meat-loaf-recipe-1921718")
-        main("https://www.allrecipes.com/recipe/16354/easy-meatloaf/")
+    main()
