@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 from dependency_parser import DependencyParser
+import type_checker
 
 
 # returns list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
@@ -25,6 +26,8 @@ def main(url):
     ingredients_data = dp.parse_ingredients(ingredients)
     print(ingredients_data)
 
+    for i in ingredients_data:
+        type_checker.ingredients.append(i)
 
     # Steps
     steps = [step["text"] for step in js[0]["recipeInstructions"]]
