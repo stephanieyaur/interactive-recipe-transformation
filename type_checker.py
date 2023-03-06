@@ -467,3 +467,4 @@ pantry = ["canola oil",
 "peanuts", 
 "sunflower seeds"]
 
+ingredients = []

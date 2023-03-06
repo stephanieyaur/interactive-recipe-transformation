@@ -144,10 +144,12 @@ class DependencyParser:
             chunk = self.chunker(token["text"],step)
             if not token["text"]:
                 continue
+            # find cooking methods
             elif token["text"].lower() in type_checker.methods:
                 if chunk not in sd.cookingAction:
                     sd.cookingAction.append(chunk)
-            elif token["part-of-speech"] in ["dobj","conj"]:
+            # find ingredients
+            elif token["part-of-speech"] in ["dobj","conj"] and chunk.strip() in type_checker.ingredients:
                 if chunk not in sd.ingredients:
                     sd.ingredients.append(chunk)
             elif token["part-of-speech"] == "pobj":

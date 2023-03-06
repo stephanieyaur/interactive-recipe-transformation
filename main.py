@@ -32,7 +32,7 @@ def main():
     global_vars.prep_time = prep_time
     global_vars.cook_time = cook_time
     global_vars.total_time = total_time
-    get_response("blah blah")
+    question_parser("blah blah")
 
 # returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
 # prep_time + cook_time = total_time
