@@ -1,5 +1,8 @@
 # Chef Bot
 Chef Bot is an interactive NLP recipe chatbot that given a recipe url, answers user's recipe questions. 
+_Frontend Repo:_ https://github.com/stephanieyaur/recipe-bot
+
+_Backend Repo:_ https://github.com/meganyaur/recipe
 
 ## Description
 To begin, it offers 2 user flows: 
