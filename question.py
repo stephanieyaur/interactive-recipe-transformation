@@ -5,15 +5,16 @@ import webbrowser
 import re
 import json
 from dependency_parser import DependencyParser
-from requests_html import HTMLSession
+# import requests_html
 from nltk.stem.snowball import SnowballStemmer
 from word2number import w2n
 from number_parser import parse_ordinal
+from requests_html import HTMLSession
 
 
 # returns response as json object with 'text' and 'url' fields
 def get_response(question, input):
-    response = question_parser(question)
+    response = question_parser(question, input)
     input["last_bot"] = response
 
     # format into json object
@@ -25,8 +26,8 @@ def get_response(question, input):
         dict["text"] = response
         dict["url"] = ""
 
-    final = json.dumps(dict)
-    return final
+    # final = json.dumps(dict)
+    return dict
 
 def question_parser(question, input):
 
@@ -40,8 +41,8 @@ def question_parser(question, input):
     tools = input["tools"]
     last_bot = input["last_bot"]
     last_user = input["last_user"]
+    curr_step = input["curr_step"]
 
-    curr_step = -1
     # question = [q.lower() for q in question.split()] 
     question = question.lower().strip()
     set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.", "I didn't quite catch that. Can you please rephrase?",
@@ -65,7 +66,7 @@ def question_parser(question, input):
             if curr_step == -1:
                 return set_phrases[3]
             else:
-                return set_phrases[4] + str(curr_step+1) + "?"
+                return set_phrases[4] + " " + str(curr_step+2) + "?"
         else:
             # remove thank you/thanks, please, periods, and whitespace
             question = question.replace("thank you", "")
@@ -79,6 +80,7 @@ def question_parser(question, input):
         if question == "yes" or question == "yes.":
             if last_bot == set_phrases[3] or last_bot.startswith(set_phrases[4]):
                 curr_step += 1
+                input["curr_step"] = curr_step
                 return steps[curr_step]
         elif question == "no" or question == "no.":
             return set_phrases[1]
@@ -106,9 +108,9 @@ def question_parser(question, input):
                 return "The recipe calls for " + str(len(ingredients)) + " ingredients."
             else:
                 stopwords = ['i']
-                ingredients = filter(lambda x:x[1]=='NN' or x[1]=='NNS', pos_tagged)
-                ingredients = [word for word in ingredients if word not in stopwords]
-                ingredient = stemmer.stem(ingredients[0][0])
+                q_ingredients = filter(lambda x:x[1]=='NN' or x[1]=='NNS', pos_tagged)
+                q_ingredients = [word for word in q_ingredients if word not in stopwords]
+                ingredient = stemmer.stem(q_ingredients[0][0])
                 return [ingredient_step for ingredient_step in ingredients if ingredient in ingredient_step][0]
             
         # get nth step
@@ -125,6 +127,7 @@ def question_parser(question, input):
                 return "I can see you're trying to get a certain number step. Please enter a valid number word (eg. two or second)"
             if step_index < len(steps):
                 curr_step = step_index - 1
+                input["curr_step"] = curr_step
                 return steps[curr_step]
             else:
                 return "Not a valid step number. There are " + str(len(steps)) + " total steps."
