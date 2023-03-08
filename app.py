@@ -17,7 +17,7 @@ def process_recipe():
     title, ingredients, steps, prep_time, cook_time, total_time = main.process_recipe(recipe_url)
     return {"url": recipe_url, "title": title, "ingredients": ingredients, "steps": steps, "prep_time": prep_time, "cook_time": cook_time, "total_time": total_time}
 
-@app.route("api/chat", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def process_message():
     request_data = flask.request.get_json()
     question, recipe_data = request_data["question"], request_data["recipe_data"]
