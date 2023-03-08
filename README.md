@@ -5,6 +5,13 @@ _Frontend Repo:_ https://github.com/stephanieyaur/recipe-bot
 
 _Backend Repo:_ https://github.com/meganyaur/recipe
 
+## How To Use:
+Note that due to latency issues with a free Azure subscription, deployed APIs took too long to load. Instead, our project is run locally for best performance.
+1. Clone the frontend repo. Clone the backend repo. 
+2. Inside the root directory of the frontend repo, run ````npm start````
+3. Inside the root directory of the backend repo, run ````python app.py````
+4. Go to http://localhost:3000/ and start asking Chef Bot your recipe questions! An example recipe could be https://www.allrecipes.com/recipe/16354/easy-meatloaf/
+
 ## Description
 To begin, it offers 2 user flows: 
 1. Go over ingredients list
