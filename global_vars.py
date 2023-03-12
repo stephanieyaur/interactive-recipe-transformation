@@ -12,4 +12,6 @@ tools = []
 last_bot = ""
 last_user = ""
 
+transformations = []
+
 curr_step = -1
