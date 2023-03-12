@@ -1,10 +1,11 @@
 beautifulsoup4==4.11.2
 Flask==2.2.3
+Flask_Cors==3.0.10
 nltk==3.8.1
 number_parser==0.3.0
 numpy==1.22.2
 recipe==0.32.1
 requests==2.27.1
-requests_html
+requests_html==0.10.0
 spacy==3.5.0
 word2number==1.1

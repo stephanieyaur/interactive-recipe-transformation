@@ -30,6 +30,11 @@ def get_response(question, input):
     return dict
 
 def question_parser(question, input):
+    def go_over_step():
+        if (curr_step < len(steps)):
+            return set_phrases[5] + " " + str(curr_step + 1) + ": " + steps[curr_step]
+        else:
+            return set_phrases[6]
 
     url = input["url"]
     title = input["title"]
@@ -46,7 +51,7 @@ def question_parser(question, input):
     # question = [q.lower() for q in question.split()] 
     question = question.lower().strip()
     set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.", "I didn't quite catch that. Can you please rephrase?",
-                  " Would you like to begin Step 1?", "Would you like to continue to Step"] 
+                  " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]"]
     stemmer = SnowballStemmer("english") 
 
     text = nltk.word_tokenize(question)
@@ -81,7 +86,11 @@ def question_parser(question, input):
             if last_bot == set_phrases[3] or last_bot.startswith(set_phrases[4]):
                 curr_step += 1
                 input["curr_step"] = curr_step
-                return steps[curr_step]
+                return go_over_step()
+            elif last_bot == set_phrases[6]:
+                curr_step = 0
+                input["curr_step"] = curr_step
+                return go_over_step()
         elif question == "no" or question == "no.":
             return set_phrases[1]
 
@@ -89,6 +98,10 @@ def question_parser(question, input):
         if question =="1" or question == "one" or question == "go over ingredients list":
             return '\n'.join(ingredients)
         elif question =="2" or question == "two" or question == "go over recipe steps" or question == "go over steps" or question == "recipe steps" or question == "steps":
+            curr_step += 1
+            input["curr_step"] = curr_step
+            return go_over_step()
+        elif "steps" in question and "all" in question:
             return '\n'.join(steps)
         
         # times
@@ -128,7 +141,7 @@ def question_parser(question, input):
             if step_index < len(steps):
                 curr_step = step_index - 1
                 input["curr_step"] = curr_step
-                return steps[curr_step]
+                return go_over_step()
             else:
                 return "Not a valid step number. There are " + str(len(steps)) + " total steps."
             
@@ -140,7 +153,7 @@ def question_parser(question, input):
         # repeat
         if "repeat" in question:
             if "step" in question:
-                return steps[curr_step]
+                return set_phrases[5] + " " + str(curr_step+1) + ": " + steps[curr_step]
             else:
                 return last_bot
         
