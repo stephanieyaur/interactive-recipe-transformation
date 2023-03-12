@@ -165,7 +165,7 @@ def question_parser(question, input):
             
         
         # youtube tutorial
-        if "how to" in question or "how do":
+        if "how to" in question or "how do" in question:
             return search_youtube(question)
         
         # repeat

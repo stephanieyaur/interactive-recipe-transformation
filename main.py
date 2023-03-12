@@ -18,13 +18,11 @@ def process_recipe(url):
     # process step data using dependency parser
     dp = DependencyParser()
     steps_data = []
-    for s in steps:
-        steps_data.append(dp.parse_step(s))
-
-    # get all tools
     total_tools = []
-    for sd in steps_data:
+    for s in steps:
+        sd = dp.parse_step(s)
         total_tools += sd.tools
+        steps_data.append(sd.__dict__)
 
     return title, ingredients, steps, prep_time, cook_time, total_time, steps_data, total_tools
 
@@ -65,38 +63,9 @@ def convert_time(input):
         return output
 
 if __name__ == "__main__":
-    question = "yes"
-    input = {
-        "cook_time": "60",
-        "ingredients": [
-            "1.5 pounds ground beef",
-            "1 egg",
-            "1 onion, chopped",
-            "1 cup milk",
-            "1 cup dried bread crumbs",
-            "salt and pepper to taste",
-            "0.333 cup ketchup",
-            "2 tablespoons brown sugar",
-            "2 tablespoons prepared mustard"
-        ],
-        "last_bot": "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.",
-        "last_user": "",
-        "prep_time": "15",
-        "steps": [
-            "Preheat the oven to 350 degrees F (175 degrees C)",
-            "Lightly grease a 9x5-inch loaf pan",
-            "Combine ground beef, onion, milk, bread crumbs and egg in a large bowl",
-            "season with salt and pepper",
-            "Transfer into prepared loaf pan",
-            "Mix ketchup, brown sugar, and mustard together in a small bowl until well combined",
-            "pour over meatloaf and spread it evenly over the top",
-            "Bake in the preheated oven until no longer pink in the center, about 1 hour"
-        ],
-        "title": "\nEasy Meatloaf",
-        "tools": [
-            "No tools"
-        ],
-        "total_time": "75",
-        "url": "https://www.allrecipes.com/recipe/16354/easy-meatloaf/"
-    }
+    recipe_url = "https://www.allrecipes.com/recipe/10813/best-chocolate-chip-cookies/"
+    # title, ingredients, steps, prep_time, cook_time, total_time, steps_data, total_tools = process_recipe(recipe_url)
+    question = "what tools do I need?"
+    input = "{\"url\": \"https://www.allrecipes.com/recipe/16354/easy-meatloaf/\", \"title\": \"\\nEasy Meatloaf\", \"ingredients\": [\"1.5 pounds ground beef\", \"1 egg\", \"1 onion, chopped\", \"1 cup milk\", \"1 cup dried bread crumbs\", \"salt and pepper to taste\", \"0.333 cup ketchup\", \"2 tablespoons brown sugar\", \"2 tablespoons prepared mustard\"], \"steps\": [\"Preheat the oven to 350 degrees F (175 degrees C)\", \"Lightly grease a 9x5-inch loaf pan\", \"Combine ground beef, onion, milk, bread crumbs and egg in a large bowl\", \"season with salt and pepper\", \"Transfer into prepared loaf pan\", \"Mix ketchup, brown sugar, and mustard together in a small bowl until well combined\", \"pour over meatloaf and spread it evenly over the top\", \"Bake in the preheated oven until no longer pink in the center, about 1 hour\"], \"prep_time\": \"15\", \"cook_time\": \"60\", \"total_time\": \"75\", \"steps_data\": [{\"cookingAction\": [\"Preheat\"], \"ingredients\": [], \"tools\": [], \"parameters\": []}, {\"cookingAction\": [\"grease\"], \"ingredients\": [], \"tools\": [], \"parameters\": [\"Lightly\"]}, {\"cookingAction\": [\"Combine ground beef\"], \"ingredients\": [], \"tools\": [\"a large bowl\"], \"parameters\": []}, {\"cookingAction\": [\"season\"], \"ingredients\": [], \"tools\": [\"salt\"], \"parameters\": []}, {\"cookingAction\": [], \"ingredients\": [], \"tools\": [\"prepared loaf\"], \"parameters\": []}, {\"cookingAction\": [\"Mix ketchup\", \"brown sugar\"], \"ingredients\": [], \"tools\": [\"a small bowl\"], \"parameters\": [\"together\", \"well\"]}, {\"cookingAction\": [\"pour\", \"spread\"], \"ingredients\": [], \"tools\": [\"meatloaf\", \"the top\"], \"parameters\": [\"evenly\"]}, {\"cookingAction\": [\"Bake\"], \"ingredients\": [], \"tools\": [\"preheated\", \"the center\"], \"parameters\": [\"oven\", \"longer\", \"about\"]}], \"tools\": [\"a large bowl\", \"salt\", \"prepared loaf\", \"a small bowl\", \"meatloaf\", \"the top\", \"preheated\", \"the center\"], \"last_bot\": \"What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.\", \"last_user\": \"\", \"curr_step\": -1}"
+    input = json.loads(input)
     response = get_response(question, input)
