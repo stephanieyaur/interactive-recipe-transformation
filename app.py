@@ -20,11 +20,10 @@ def process_recipe():
     request_data = flask.request.get_json()
     recipe_url = request_data["recipe_url"]
     # call recipe processor function
-    title, ingredients, steps, prep_time, cook_time, total_time = main.process_recipe(recipe_url)
-    tools = ["No tools"]
+    title, ingredients, steps, prep_time, cook_time, total_time, steps_data, total_tools = main.process_recipe(recipe_url)
     last_user = ""
     last_bot = message = "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps."
-    recipe_data = {"url": recipe_url, "title": title, "ingredients": ingredients, "steps": steps, "prep_time": prep_time, "cook_time": cook_time, "total_time": total_time, "tools": tools, "last_bot": last_bot, "last_user": last_user, "curr_step": -1}
+    recipe_data = {"url": recipe_url, "title": title, "ingredients": ingredients, "steps": steps, "prep_time": prep_time, "cook_time": cook_time, "total_time": total_time, "steps_data": steps_data, "tools": total_tools, "last_bot": last_bot, "last_user": last_user, "curr_step": -1}
     recipe_data = json.dumps(recipe_data)
     response = flask.jsonify({"message": message, "recipe_data": recipe_data})
     response.headers.add('Access-Control-Allow-Origin', '*')

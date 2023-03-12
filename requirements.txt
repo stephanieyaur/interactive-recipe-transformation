@@ -1,9 +1,9 @@
 beautifulsoup4==4.11.2
 Flask
 Flask_Cors
-nltk==3.8.1
+nltk
 number_parser==0.3.0
-numpy==1.22.2
+numpy
 recipe==0.32.1
 requests==2.27.1
 requests_html==0.10.0

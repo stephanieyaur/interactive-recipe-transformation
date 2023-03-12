@@ -126,6 +126,24 @@ def question_parser(question, input):
                 ingredient = stemmer.stem(q_ingredients[0][0])
                 return [ingredient_step for ingredient_step in ingredients if ingredient in ingredient_step][0]
             
+        # get next step
+        if "next" in question:
+            if curr_step < len(steps) - 1:
+                curr_step += 1
+                input["curr_step"] = curr_step
+                return go_over_step()
+            else:
+                return "Well done, that's the end of the recipe steps!"
+            
+        # go back step
+        if "back" in question:
+            if curr_step > 0:
+                curr_step -= 1
+                input["curr_step"] = curr_step
+                return go_over_step()
+            else:
+                return "This is the first step."
+
         # get nth step
         if len(numerical_words) != 0 and "step" in question:
             chunk = " ".join([word for word in numerical_words])
@@ -147,7 +165,7 @@ def question_parser(question, input):
             
         
         # youtube tutorial
-        if "how to" in question:
+        if "how to" in question or "how do":
             return search_youtube(question)
         
         # repeat

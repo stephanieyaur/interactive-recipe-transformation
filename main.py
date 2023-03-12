@@ -15,7 +15,18 @@ def process_recipe(url):
     steps = re.split(r';', str_steps)
     steps = [i.strip() for i in steps if i]
 
-    return title, ingredients, steps, prep_time, cook_time, total_time
+    # process step data using dependency parser
+    dp = DependencyParser()
+    steps_data = []
+    for s in steps:
+        steps_data.append(dp.parse_step(s))
+
+    # get all tools
+    total_tools = []
+    for sd in steps_data:
+        total_tools += sd.tools
+
+    return title, ingredients, steps, prep_time, cook_time, total_time, steps_data, total_tools
 
 # returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time
 # prep_time + cook_time = total_time
