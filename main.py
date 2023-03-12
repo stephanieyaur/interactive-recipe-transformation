@@ -25,6 +25,8 @@ def main():
     while True:
         question = input()
         response = get_response(question)
+        if response:
+            print(response)
 
 
 
@@ -49,13 +51,10 @@ def process_recipe(url):
 
     # process step data using dependency parser
     dp = DependencyParser()
-    steps_data = []
-    total_tools = []
     for s in steps:
         sd = dp.parse_step(s)
-        total_tools += sd.tools
-        steps_data.append(sd)
-
+        global_vars.tools += sd.tools
+        global_vars.parsed_steps.append(sd)
     return
 
 # returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time

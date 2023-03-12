@@ -18,19 +18,8 @@ from transform import transformDriver
 # returns response as json object with 'text' and 'url' fields
 def get_response(question):
     response = question_parser(question)
-    input["last_bot"] = response
-
-    # format into json object
-    dict = {}
-    if response.startswith("http"):
-        dict["text"] = "I found a reference for you: "
-        dict["url"] = response
-    else:
-        dict["text"] = response
-        dict["url"] = ""
-
-    # final = json.dumps(dict)
-    return dict
+    global_vars.last_bot = response
+    return response
 
 def question_parser(question):
     def go_over_step():
@@ -85,12 +74,16 @@ def question_parser(question):
 
         # option 1 or 2
         if question =="1" or question == "one" or question == "go over ingredients list":
-            return '\n'.join(global_vars.ingredients)
+            for i in global_vars.ingredients:
+                print(" - " + i)
+            return
         elif question =="2" or question == "two" or question == "go over recipe steps" or question == "go over steps" or question == "recipe steps" or question == "steps":
             global_vars.curr_step += 1
             return go_over_step()
         elif "steps" in question and "all" in question:
-            return '\n'.join(global_vars.steps)
+            for i in range(len(global_vars.steps)):
+                print(str(i+1) + ". " + global_vars.steps[i])
+            return
         
         # times
         if "time" in question:
@@ -107,11 +100,16 @@ def question_parser(question):
                 return "There are " + str(len(global_vars.steps)) + " total steps."
             if "ingredients" in question:
                 return "The recipe calls for " + str(len(global_vars.ingredients)) + " ingredients."
+            if "tools" in question:
+                return "The recipe calls for " + str(len(global_vars.tools)) + " tools."
             else:
                 stopwords = ['i']
                 q_ingredients = filter(lambda x:x[1]=='NN' or x[1]=='NNS', pos_tagged)
                 q_ingredients = [word for word in q_ingredients if word not in stopwords]
                 ingredient = stemmer.stem(q_ingredients[0][0])
+                amounts = [ingredient_step for ingredient_step in global_vars.ingredients if ingredient in ingredient_step]
+                if amounts == []:
+                    return set_phrases[2]
                 return [ingredient_step for ingredient_step in global_vars.ingredients if ingredient in ingredient_step][0]
             
         # get next step
@@ -142,7 +140,7 @@ def question_parser(question):
                     return "I can see you're trying to get a certain number step. Please enter a valid number word (eg. two or second)"
             if not step_index:
                 return "I can see you're trying to get a certain number step. Please enter a valid number word (eg. two or second)"
-            if step_index < len(global_vars.steps):
+            if step_index <= len(global_vars.steps):
                 global_vars.curr_step = step_index - 1
                 return go_over_step()
             else:
@@ -162,15 +160,21 @@ def question_parser(question):
         
         # tools list
         if "tools" in question:
-            return '\n'.join(global_vars.tools)
+            for t in global_vars.tools:
+                print(" - " + t)
+            return
 
         # ingredients list
         if "ingredients" in question:
-            return '\n'.join(global_vars.ingredients)
+            for i in global_vars.ingredients:
+                print(" - " + i)
+            return
         
         # steps list
         if "steps" in question:
-            return '\n'.join(global_vars.steps)
+            for s in global_vars.steps:
+                print(" - " + s)
+            return
 
         # transform recipe
         if "transform" in question or "convert" in question:

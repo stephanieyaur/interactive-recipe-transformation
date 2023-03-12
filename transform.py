@@ -26,3 +26,8 @@ def transformDriver(question):
             return
         else:
             print("Sorry, the only cuisines we are currently able to transform a recipe into are chinese and kosher. Please try one of those.")
+
+# helper to sort database.json alphabetically
+def sortDict(dict):
+    sorted_dict = {key: value for key, value in sorted(dict.items())}
+    return sorted_dict
