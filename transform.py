@@ -26,3 +26,7 @@ def transformDriver(question):
             return
         else:
             print("Sorry, the only cuisines we are currently able to transform a recipe into are chinese and kosher. Please try one of those.")
+    elif "double" in question:
+        return
+    elif "half" in question:
+        return
