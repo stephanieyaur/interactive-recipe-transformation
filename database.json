@@ -393,5 +393,18 @@
     "beef patty": "falafel",
     "sausage": "seitan",
     "meatballs": "tofu"
+  },
+  "lactose-free": {
+    "milk": "soy milk",
+    "cheese": "soy cheese",
+    "cream": "oat milk",
+    "heavy cream": "oat milk",
+    "whipped cream": "Reddi-Wip non-dairy vegan whipped topping made with almond milk",
+    "cream cheese": "almond cream cheese",
+    "yogurt": "lactose free yogurt",
+    "kefir": "lactose free kefir",
+    "buttermilk": "oat milk",
+    "chocolate": "dairy free chocolate",
+    "chocolate chips": "dairy free chocolate chips"
   }
 }
