@@ -344,5 +344,54 @@
     "vinegar": "rice wine vinegar",
     "red pepper flakes": "chili oil",
     "fish sauce": "soy sauce"
+  },
+  "unhealthy substitutions": {
+    "brown rice":"white rice",
+    "egg whites":"eggs",
+    "whole wheat pasta":"pasta",
+    "sour cream":"fat-free yogurt",
+    "whole wheat flour":"all-purpose flour",
+    "ground turkey":"ground beef",
+    "prosciutto":"bacon",
+    "rolled oats":"bread crumbs",
+    "coconut oil":"butter",
+    "nutritional yeast":"cheese",
+    "cacao nibs":"chocolate chips",
+    "real oil":"cooking spray",
+    "honey":"corn syrup",
+    "cottage cheese":"cream cheese",
+    "crunchy toasted nuts":"croutons",
+    "evaporated skim milk":"heavy cream",
+    "dark leafy greens":"iceberg lettuce",
+    "balsamic vinegar":"italian dressing",
+    "steamed cauliflour":"mashed potatoes",
+    "greek yogurt":"mayonnaise",
+    "coconut aminos":"soy sauce",
+    "sweet potatoes":"russet potatoes",
+    "lettuce wraps":"tortillas",
+    "coconut sugar":"white sugar"
+  },
+ 
+  "to-kosher-meat": {
+    "pork": "beef",
+    "bacon": "lamb bacon",
+    "shrimp": "chicken",
+    "crab": "imitation crab",
+    "ham": "salami",
+    "cheese": "vegan cheese",
+    "butter": "margarine",
+    "milk": "almond milk",
+    "cream": "coconut milk"
+  },
+  "to-kosher-milk": {
+    "pork": "beef",
+    "bacon": "lamb bacon",
+    "shrimp": "chicken",
+    "crab": "imitation crab",
+    "chicken": "tofu",
+    "ground beef": "black beans",
+    "beef patty": "falafel",
+    "sausage": "seitan",
+    "meatballs": "tofu"
   }
 }
