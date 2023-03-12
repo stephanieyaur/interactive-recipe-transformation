@@ -19,6 +19,7 @@ class IngredientData:
     def __init__(self):
         self.ingredient = None
         self.amount = None
+        self.measurement = None
         self.parameters = None
 
     def __repr__(self) -> str:
@@ -124,7 +125,9 @@ class DependencyParser:
                 if not token["text"]:
                     continue
                 elif token["part-of-speech"] == "nummod":
-                    id.amount = dfs_amount(token)
+                    amountMeasurement = dfs_amount(token)
+                    id.amount = amountMeasurement[0]
+                    id.measurement = amountMeasurement[1:]
                 if token["part-of-speech"] in ["dobj", "nsubj"]:
                     id.ingredient = dfs_ingredient_not_root(token)
                 elif token["part-of-speech"] == "ROOT":
