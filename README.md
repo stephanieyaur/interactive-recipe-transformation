@@ -9,7 +9,7 @@ _Backend Repo:_ https://github.com/meganyaur/recipe
 Note that due to latency issues with a free Azure subscription, deployed APIs took too long to load. Instead, our project is run locally for best performance.
 1. Clone the frontend repo. Clone the backend repo. 
 2. Inside the root directory of the frontend repo, run ````npm i```` and after that command finishes, ````npm start````
-3. Inside the root directory of the backend repo, run ````python app.py````
+3. Inside the root directory of the backend repo, run ````pip install -r requirements.py```` and after that command finishes,  ````python app.py````
 4. Go to http://localhost:3000/ and start asking Chef Bot your recipe questions! An example recipe could be https://www.allrecipes.com/recipe/16354/easy-meatloaf/
 
 ## Description
