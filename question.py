@@ -181,7 +181,9 @@ def question_parser(question):
         if "transform" in question or "convert" in question:
             return transformDriver(question)
 
-        if "whole" in question and "recipe" in question:
+        if "recipe" in question:
+            if "for" in question or "make" in question:
+                return global_vars.title
             return displayEntireRecipe()
 
 

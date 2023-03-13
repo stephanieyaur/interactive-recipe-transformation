@@ -9,6 +9,7 @@ cook_time = ""
 total_time = ""
 tools = []
 parsed_steps = []
+parsed_ingredients = []
 
 last_bot = ""
 last_user = ""
