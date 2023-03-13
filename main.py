@@ -54,7 +54,7 @@ def process_recipe(url):
         sd = global_vars.dp.parse_step(s)
         global_vars.tools += sd.tools
         global_vars.parsed_steps.append(sd)
-    global_vars.dp.parse_ingredients(global_vars.ingredients)
+    global_vars.parsed_ingredients = global_vars.dp.parse_ingredients(global_vars.ingredients)
     return
 
 # returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time

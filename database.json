@@ -50,7 +50,8 @@
     "russet potatoes": "sweet potatoes",
     "yukon potatoes": "sweet potatoes",
     "tortillas": "lettuce wraps",
-    "white sugar": "coconut sugar" 
+    "white sugar": "coconut sugar",
+    "flour": "whole wheat flour"
   },
   "INSPIRATION OF TO-CHINESE DICT": "https://github.com/tylrodg/CS337-Recipes/blob/master/recipeDB.json; https://www.thespruceeats.com/chinese-cooking-ingredient-substitutions-4057957",
   "to-chinese": {
@@ -126,7 +127,7 @@
     "red pepper flakes": "chili oil",
     "fish sauce": "soy sauce"
   },
-  "unhealthy substitutions": {
+  "unhealthy-substitutions": {
     "brown rice":"white rice",
     "egg whites":"eggs",
     "whole wheat pasta":"pasta",
@@ -158,7 +159,7 @@
     "shrimp": "chicken",
     "crab": "imitation crab",
     "ham": "salami",
-    "lobster": "chicken",
+    "lobster": "chicken"
   },
   "lactose-free": {
     "milk": "soy milk",
