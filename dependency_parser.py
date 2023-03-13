@@ -126,7 +126,7 @@ class DependencyParser:
                     continue
                 elif token["part-of-speech"] == "nummod":
                     amountMeasurement = dfs_amount(token)
-                    id.amount = str(float(amountMeasurement[0]))
+                    id.amount = str(float(amountMeasurement.split()[0]))
                     id.measurement = amountMeasurement[1:]
                 if token["part-of-speech"] in ["dobj", "nsubj"]:
                     id.ingredient = dfs_ingredient_not_root(token)

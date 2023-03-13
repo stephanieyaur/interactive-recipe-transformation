@@ -39,13 +39,10 @@ def transformDriver(question):
         else:
             print("Sorry, the only cuisines we are currently able to transform a recipe into are chinese and kosher. Please try one of those.")
     elif "double" in question:
-        print("original ingredients")
-        print(global_vars.ingredients)
         ingredient_steps = []
         for ingredient in global_vars.parsed_ingredients:
             # get original and new amount
             original_amount = global_vars.parsed_ingredients[ingredient].amount
-            print(type(original_amount))
             new_amount = float(original_amount) * 2
             new_amount = str(new_amount)
 
@@ -65,22 +62,31 @@ def transformDriver(question):
             else:
                 ingredient_step = original_step.replace(original_amount, new_amount)
             ingredient_steps.append(ingredient_step)
-        print("new ingredients")
         return ingredient_steps
     elif "half" in question:
-        print("original ingredients")
-        print(global_vars.ingredients)
         ingredient_steps = []
         for ingredient in global_vars.parsed_ingredients:
-            # get ingredient_step
+            # get original and new amount
             original_amount = global_vars.parsed_ingredients[ingredient].amount
-            print(type(original_amount))
             new_amount = float(original_amount) / 2
+            new_amount = str(new_amount)
+
+            # get original step
             ingredient_split = ingredient.split()
             original_step = [step for step in global_vars.ingredients if all(part in step for part in ingredient_split)][0]
-            ingredient_step = original_step.replace(original_amount, str(new_amount))
+
+            # check if floating point is an int
+            original_num, original_decimal = [int(part) for part in original_amount.split('.')]
+            new_num, new_decimal = [int(part) for part in str(new_amount).split('.')]
+            if new_decimal == 0:
+                new_amount = str(new_num)
+
+            # replace old amount with new amount
+            if original_decimal == 0:
+                ingredient_step = original_step.replace(str(original_num), new_amount)
+            else:
+                ingredient_step = original_step.replace(original_amount, new_amount)
             ingredient_steps.append(ingredient_step)
-        print("new ingredients")
         return ingredient_steps
 
 # helper to sort database.json alphabetically
