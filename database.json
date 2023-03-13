@@ -151,29 +151,14 @@
     "sweet potatoes":"russet potatoes",
     "lettuce wraps":"tortillas",
     "coconut sugar":"white sugar"
-  },
- 
-  "to-kosher-meat": {
+  }, 
+  "to-kosher": {
     "pork": "beef",
     "bacon": "lamb bacon",
     "shrimp": "chicken",
     "crab": "imitation crab",
     "ham": "salami",
-    "cheese": "vegan cheese",
-    "butter": "margarine",
-    "milk": "almond milk",
-    "cream": "coconut milk"
-  },
-  "to-kosher-milk": {
-    "pork": "beef",
-    "bacon": "lamb bacon",
-    "shrimp": "chicken",
-    "crab": "imitation crab",
-    "chicken": "tofu",
-    "ground beef": "black beans",
-    "beef patty": "falafel",
-    "sausage": "seitan",
-    "meatballs": "tofu"
+    "lobster": "chicken",
   },
   "lactose-free": {
     "milk": "soy milk",
