@@ -74,6 +74,7 @@ def question_parser(question):
 
         # option 1 or 2
         if question =="1" or question == "one" or question == "go over ingredients list":
+            print("Ingredients:")
             for i in global_vars.ingredients:
                 print(" - " + i)
             return
@@ -172,13 +173,16 @@ def question_parser(question):
         
         # steps list
         if "steps" in question:
-            for s in global_vars.steps:
-                print(" - " + s)
+            for i in range(len(global_vars.steps)):
+                print(str(i+1) + ". " + global_vars.steps[i])
             return
 
         # transform recipe
         if "transform" in question or "convert" in question:
             return transformDriver(question)
+
+        if "whole" in question and "recipe" in question:
+            return displayEntireRecipe()
 
 
         
@@ -212,3 +216,23 @@ def search_youtube(question):
         return first_link
 
 # test = search_youtube("How to cook onions")
+
+def displayEntireRecipe():
+    print(global_vars.title)
+    print("--------------------------")
+    print("Prep Time: " + global_vars.prep_time)
+    print("Cook Time: " + global_vars.cook_time)
+    print("Total Time: " + global_vars.total_time)
+    print("--------------------------")
+    print("Ingredients:")
+    for i in global_vars.ingredients:
+        print(" - " + i)
+    print("--------------------------")
+    print("Tools:")
+    for t in global_vars.tools:
+        print(" - " + t)
+    print("--------------------------")
+    print("Steps:")
+    for i in range(len(global_vars.steps)):
+        print(str(i + 1) + ". " + global_vars.steps[i])
+    return
