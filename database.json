@@ -155,12 +155,27 @@
     "lettuce wraps":"tortillas",
     "coconut sugar":"white sugar"
   }, 
-  "to-kosher": {
+"to-kosher-meat": {
     "pork": "beef",
     "bacon": "lamb bacon",
     "shrimp": "chicken",
     "crab": "imitation crab",
     "ham": "salami",
+    "cheese": "vegan cheese",
+    "butter": "margarine",
+    "milk": "almond milk",
+    "cream": "coconut milk"
+  },
+  "to-kosher-milk": {
+    "pork": "beef",
+    "bacon": "lamb bacon",
+    "shrimp": "chicken",
+    "crab": "imitation crab",
+    "chicken": "tofu",
+    "ground beef": "black beans",
+    "beef patty": "falafel",
+    "sausage": "seitan",
+    "meatballs": "tofu"
     "lobster": "chicken",
     "butter": "white beans",
     "eggs": "flax egg",

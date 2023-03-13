@@ -31,7 +31,7 @@ def question_parser(question):
     # question = [q.lower() for q in question.split()] 
     question = question.lower().strip()
     set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.", "I didn't quite catch that. Can you please rephrase?",
-                  " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]", "Ok, how would you like to convert the recipe? Type [convert to] along with an option: vegetarian, non-vegetarian, healthy, unhealthy, lactose-free, chinese, kosher milk, or kosher meat"]
+                  " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]", "Ok, how would you like to convert the recipe? Type [convert to] along with an option: vegetarian, non-vegetarian, healthy, unhealthy, lactose-free, chinese, kosher milk, kosher meat, double, or half"]
     stemmer = SnowballStemmer("english") 
 
     text = nltk.word_tokenize(question)
@@ -184,7 +184,7 @@ def question_parser(question):
                 return global_vars.title
             return displayEntireRecipe()
 
-        if "convert to" in question:
+        if "convert to" in question or "double" in question or "half" in question or "halve" in question:
             print("Ok, give me one second to convert the recipe...")
             return transformDriver(question)
 

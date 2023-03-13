@@ -1,4 +1,3 @@
-import recipe
 from dependency_parser import DependencyParser
 
 url = ""

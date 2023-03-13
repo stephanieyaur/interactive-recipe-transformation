@@ -116,7 +116,9 @@ class DependencyParser:
 
 
         ingredients_data = {}
+        count = 0
         for i in ingredientsArr:
+            i = i.split(",")[0]
             tokens = self.tokenize(i)
             id = IngredientData()
             rootName = None
@@ -126,7 +128,7 @@ class DependencyParser:
                     continue
                 elif token["part-of-speech"] == "nummod":
                     amountMeasurement = dfs_amount(token)
-                    id.amount = str(float(amountMeasurement[0]))
+                    id.amount = str(float(amountMeasurement.split()[0]))
                     id.measurement = amountMeasurement[1:]
                 if token["part-of-speech"] in ["dobj", "nsubj"]:
                     id.ingredient = dfs_ingredient_not_root(token)
@@ -134,8 +136,15 @@ class DependencyParser:
                     rootName = token["text"]
             if id.ingredient == None:
                 id.ingredient = dfs_ingredient_root(tokens[rootName])
+            if id.amount is None:
+                first_word = list(tokens.keys())[0]
+                try:
+                    id.amount = str(float(first_word))
+                except:
+                    ""
             id.parameters = ingredient_parameters(tokens)
-            ingredients_data[id.ingredient] = id
+            ingredients_data[count] = id
+            count += 1
         return ingredients_data
 
     # Returns a StepData objects given a step
