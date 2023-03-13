@@ -102,6 +102,9 @@ def change_amount(isDouble):
         ingredient = global_vars.parsed_ingredients[i].ingredient
         # get original and new amount
         original_amount = global_vars.parsed_ingredients[i].amount
+        if original_amount is None:
+            ingredient_steps.append(global_vars.ingredients[i])
+            continue
         new_amount = float(original_amount) * amount
         new_amount = str(new_amount)
 

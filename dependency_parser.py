@@ -138,7 +138,10 @@ class DependencyParser:
                 id.ingredient = dfs_ingredient_root(tokens[rootName])
             if id.amount is None:
                 first_word = list(tokens.keys())[0]
-                id.amount = str(float(first_word))
+                try:
+                    id.amount = str(float(first_word))
+                except:
+                    ""
             id.parameters = ingredient_parameters(tokens)
             ingredients_data[count] = id
             count += 1
