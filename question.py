@@ -229,10 +229,10 @@ def displayEntireRecipe():
     print("Ingredients:")
     for i in global_vars.ingredients:
         print(" - " + i)
-    print("--------------------------")
-    print("Tools:")
-    for t in global_vars.tools:
-        print(" - " + t)
+    # print("--------------------------")
+    # print("Tools:")
+    # for t in global_vars.tools:
+    #     print(" - " + t)
     print("--------------------------")
     print("Steps:")
     for i in range(len(global_vars.steps)):

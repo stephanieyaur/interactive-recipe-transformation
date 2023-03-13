@@ -1,5 +1,10 @@
 {
   "veggie-substitutes": {
+    "ground beef": "black beans",
+    "ground pork": "kidney beans",
+    "ground turkey": "pinto beans",
+    "ground chicken": "pinto beans",
+    "beef patty": "falafel",
     "chicken": "tofu",
     "pork": "tofu",
     "beef": "tofu",
@@ -8,11 +13,6 @@
     "fish": "tofu",
     "shrimp": "mushrooms",
     "crab": "imitation crab",
-    "ground beef": "black beans",
-    "ground pork": "kidney beans",
-    "ground turkey": "pinto beans",
-    "ground chicken": "pinto beans",
-    "beef patty": "falafel",
     "sausage": "seitan",
     "meatballs": "tofu",
     "bacon": "potato skin bacon",
@@ -51,7 +51,8 @@
     "yukon potatoes": "sweet potatoes",
     "tortillas": "lettuce wraps",
     "white sugar": "coconut sugar",
-    "flour": "whole wheat flour"
+    "flour": "whole wheat flour",
+    "beef": "lean beef"
   },
   "INSPIRATION OF TO-CHINESE DICT": "https://github.com/tylrodg/CS337-Recipes/blob/master/recipeDB.json; https://www.thespruceeats.com/chinese-cooking-ingredient-substitutions-4057957",
   "to-chinese": {
@@ -96,7 +97,6 @@
     "pasta": "egg noodles",
     "brown rice": "jasmine rice",
     "rice": "jasmine rice",
-    "tea": "chinese tea",
     "sausage": "chinese sausage",
     "salsa": "mala sauce",
     "maple sauce": "ginger honey sauce",
@@ -125,7 +125,9 @@
     "salt": "soy sauce",
     "vinegar": "rice wine vinegar",
     "red pepper flakes": "chili oil",
-    "fish sauce": "soy sauce"
+    "fish sauce": "soy sauce",
+    "mexican": "chinese",
+    "jalapeno": "chili"
   },
   "unhealthy-substitutions": {
     "brown rice":"white rice",
@@ -159,15 +161,18 @@
     "shrimp": "chicken",
     "crab": "imitation crab",
     "ham": "salami",
-    "lobster": "chicken"
+    "lobster": "chicken",
+    "butter": "white beans",
+    "eggs": "flax egg",
+    "olive oil": "non-fat plain yogurt"
   },
   "lactose-free": {
-    "milk": "soy milk",
-    "cheese": "soy cheese",
-    "cream": "oat milk",
     "heavy cream": "oat milk",
     "whipped cream": "Reddi-Wip non-dairy vegan whipped topping made with almond milk",
     "cream cheese": "almond cream cheese",
+    "milk": "soy milk",
+    "cheese": "soy cheese",
+    "cream": "oat milk",
     "yogurt": "lactose free yogurt",
     "kefir": "lactose free kefir",
     "buttermilk": "oat milk",

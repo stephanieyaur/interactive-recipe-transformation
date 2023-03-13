@@ -29,12 +29,8 @@ def transformDriver(question):
             option = "chinese"
             transform("to-chinese", option)
         elif "kosher" in question:
-            if "meat" in question:
-                option = "kosher meat"
-                transform("to-kosher-meat", option)
-            else:
-                option = "kosher milk"
-                transform("to-kosher-milk", option)
+            option = "kosher"
+            transform("to-kosher", option)
         else:
             print("Sorry, the only cuisines we are currently able to transform a recipe into are chinese and kosher. Please try one of those.")
     elif "double" in question:
@@ -54,24 +50,26 @@ def sortDict(dict):
 def transform(option, strOption):
     f = open("./database.json")
     tdict = json.load(f)
-    for i in global_vars.parsed_ingredients:
-        if i in tdict[option]:
-            global_vars.transformations[i] = tdict[option][i]
+    # replace title, ingredients, and steps
+    for k in tdict[option]:
+        if k in global_vars.title.lower():
+            global_vars.title = global_vars.title.lower().replace(k, tdict[option][k])
+            global_vars.title = global_vars.title.title()
+            global_vars.transformations[k] = tdict[option][k]
+    for k in tdict[option]:
+        for i in range(len(global_vars.ingredients)):
+            if k in global_vars.ingredients[i].lower():
+                if (k != "cream" or k != "cheese") or (k == "cream" or k == "cheese") and "cream cheese" not in global_vars.ingredients[i].lower():
+                    global_vars.ingredients[i] = global_vars.ingredients[i].replace(k, tdict[option][k])
+                    global_vars.transformations[k] = tdict[option][k]
+        global_vars.dp.parse_ingredients(global_vars.ingredients)
+    for k in tdict[option]:
+        for i in range(len(global_vars.steps)):
+            if k in global_vars.steps[i].lower():
+                global_vars.steps[i] = global_vars.steps[i].replace(k, tdict[option][k])
+                global_vars.transformations[k] = tdict[option][k]
     if global_vars.transformations != {}:
-        # replace title, ingredients, and steps
         global_vars.title += " (" + strOption + ")"
-        for k in global_vars.transformations:
-            if k in global_vars.title.lower():
-                global_vars.title = global_vars.title.replace(k, global_vars.transformations[k])
-        for k in global_vars.transformations:
-            for i in range(len(global_vars.ingredients)):
-                if k in global_vars.ingredients[i].lower():
-                    global_vars.ingredients[i] = global_vars.ingredients[i].replace(k, global_vars.transformations[k])
-            global_vars.dp.parse_ingredients(global_vars.ingredients)
-        for k in global_vars.transformations:
-            for i in range(len(global_vars.steps)):
-                if k in global_vars.steps[i].lower():
-                    global_vars.steps[i] = global_vars.steps[i].replace(k, global_vars.transformations[k])
 
 def printTransformation(option):
     print("Done!")
@@ -91,9 +89,9 @@ def printTransformation(option):
             t = listTransformations[i]
             if i == len(global_vars.transformations) -1:
                 if output != "Substituted ":
-                    output += " and "
+                    output += "and "
                 output += t + " for " + global_vars.transformations[t] + "."
             else:
-                output += t + " for " + global_vars.transformations[t] + ","
+                output += t + " for " + global_vars.transformations[t] + ", "
         print(output)
     return
