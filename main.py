@@ -50,12 +50,11 @@ def process_recipe(url):
     steps = [i.strip() for i in steps if i]
 
     # process step data using dependency parser
-    dp = DependencyParser()
     for s in steps:
-        sd = dp.parse_step(s)
+        sd = global_vars.dp.parse_step(s)
         global_vars.tools += sd.tools
         global_vars.parsed_steps.append(sd)
-    dp.parse_ingredients(global_vars.ingredients)
+    global_vars.dp.parse_ingredients(global_vars.ingredients)
     return
 
 # returns title, list of ingredients, list of steps, servings, prep_time, cook_time, and total_time

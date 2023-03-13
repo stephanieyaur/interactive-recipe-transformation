@@ -31,7 +31,7 @@ def question_parser(question):
     # question = [q.lower() for q in question.split()] 
     question = question.lower().strip()
     set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.", "I didn't quite catch that. Can you please rephrase?",
-                  " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]"]
+                  " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]", "Ok, how would you like to convert the recipe? Type [convert to] along with an option: vegetarian, non-vegetarian, healthy, unhealthy, lactose-free, chinese, kosher milk, or kosher meat"]
     stemmer = SnowballStemmer("english") 
 
     text = nltk.word_tokenize(question)
@@ -81,6 +81,8 @@ def question_parser(question):
         elif question =="2" or question == "two" or question == "go over recipe steps" or question == "go over steps" or question == "recipe steps" or question == "steps":
             global_vars.curr_step += 1
             return go_over_step()
+        elif question == "3" or question == "three" or question == "Transform the recipe" or ("convert" in question and "convert to" not in question) or "transform" in question:
+            return set_phrases[7]
         elif "steps" in question and "all" in question:
             for i in range(len(global_vars.steps)):
                 print(str(i+1) + ". " + global_vars.steps[i])
@@ -177,17 +179,15 @@ def question_parser(question):
                 print(str(i+1) + ". " + global_vars.steps[i])
             return
 
-        # transform recipe
-        if "transform" in question or "convert" in question:
-            return transformDriver(question)
-
         if "recipe" in question:
             if "for" in question or "make" in question:
                 return global_vars.title
             return displayEntireRecipe()
 
+        if "convert to" in question:
+            print("Ok, give me one second to convert the recipe...")
+            return transformDriver(question)
 
-        
     return set_phrases[2]
 
 # given a question, returns a youtube video to answer it
