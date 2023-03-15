@@ -30,7 +30,7 @@ def question_parser(question):
 
     # question = [q.lower() for q in question.split()] 
     question = question.lower().strip()
-    set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list or [2] Go over recipe steps.", "I didn't quite catch that. Can you please rephrase?",
+    set_phrases= ["Please specify a URL.", "What do you want to do? [1] Go over ingredients list [2] Go over recipe steps [3] Transform the recipe", "I didn't quite catch that. Can you please rephrase?",
                   " Would you like to begin Step 1?", "Would you like to continue to Step", "Step", "Congrats - you've gone through all the steps! Would you like to go over the steps again? [yes] or [no]", "Ok, how would you like to convert the recipe? Type [convert to] along with an option: vegetarian, non-vegetarian, healthy, unhealthy, lactose-free, chinese, kosher milk, kosher meat, double, or half"]
     stemmer = SnowballStemmer("english") 
 

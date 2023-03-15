@@ -51,7 +51,6 @@
     "yukon potatoes": "sweet potatoes",
     "tortillas": "lettuce wraps",
     "white sugar": "coconut sugar",
-    "flour": "whole wheat flour",
     "beef": "lean beef"
   },
   "INSPIRATION OF TO-CHINESE DICT": "https://github.com/tylrodg/CS337-Recipes/blob/master/recipeDB.json; https://www.thespruceeats.com/chinese-cooking-ingredient-substitutions-4057957",
@@ -127,7 +126,8 @@
     "red pepper flakes": "chili oil",
     "fish sauce": "soy sauce",
     "mexican": "chinese",
-    "jalapeno": "chili"
+    "jalapeno": "chili",
+    "jalapeño": "chili"
   },
   "unhealthy-substitutions": {
     "brown rice":"white rice",
@@ -161,10 +161,11 @@
     "shrimp": "chicken",
     "crab": "imitation crab",
     "ham": "salami",
+    "cream cheese": "vegan cream cheese",
     "cheese": "vegan cheese",
     "butter": "margarine",
     "milk": "almond milk",
-    "cream": "coconut milk"
+    "heavy cream": "coconut milk"
   },
   "to-kosher-milk": {
     "pork": "beef",
@@ -175,11 +176,8 @@
     "ground beef": "black beans",
     "beef patty": "falafel",
     "sausage": "seitan",
-    "meatballs": "tofu"
-    "lobster": "chicken",
-    "butter": "white beans",
-    "eggs": "flax egg",
-    "olive oil": "non-fat plain yogurt"
+    "meatballs": "tofu",
+    "lobster": "chicken"
   },
   "lactose-free": {
     "heavy cream": "oat milk",

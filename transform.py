@@ -1,4 +1,6 @@
 import json
+
+import dependency_parser
 import global_vars
 from dependency_parser import DependencyParser
 
@@ -30,14 +32,21 @@ def transformDriver(question):
             option = "chinese"
             transform("to-chinese", option)
         elif "kosher" in question:
-            option = "kosher"
-            transform("to-kosher", option)
+            if "meat" in question:
+                option = "kosher (meat)"
+                transform("to-kosher-meat", option)
+            else:
+                option = "kosher (milk)"
+                transform("to-kosher-milk", option)
         else:
             print("Sorry, the only cuisines we are currently able to transform a recipe into are chinese and kosher. Please try one of those.")
     elif "double" in question:
-        return change_amount(True)
+        option = "Doubled"
+        change_amount(True)
     elif "half" in question:
-        return change_amount(False)
+        option = "Halved"
+        change_amount(False)
+    printTransformation(option)
 
 # helper to sort database.json alphabetically
 def sortDict(dict):
@@ -56,15 +65,16 @@ def transform(option, strOption):
     for k in tdict[option]:
         for i in range(len(global_vars.ingredients)):
             if k in global_vars.ingredients[i].lower():
-                if (k != "cream" or k != "cheese") or (k == "cream" or k == "cheese") and "cream cheese" not in global_vars.ingredients[i].lower():
+                if (k != "cream" and k != "cheese") or ((k == "cream" or k == "cheese") and "cream cheese" not in global_vars.ingredients[i].lower()):
                     global_vars.ingredients[i] = global_vars.ingredients[i].replace(k, tdict[option][k])
                     global_vars.transformations[k] = tdict[option][k]
         global_vars.dp.parse_ingredients(global_vars.ingredients)
     for k in tdict[option]:
         for i in range(len(global_vars.steps)):
             if k in global_vars.steps[i].lower():
-                global_vars.steps[i] = global_vars.steps[i].replace(k, tdict[option][k])
-                global_vars.transformations[k] = tdict[option][k]
+                if (k != "cream" and k != "cheese") or ((k == "cream" or k == "cheese") and "cream cheese" not in global_vars.steps[i].lower()):
+                    global_vars.steps[i] = global_vars.steps[i].replace(k, tdict[option][k])
+                    global_vars.transformations[k] = tdict[option][k]
     if global_vars.transformations != {}:
         global_vars.title += " (" + strOption + ")"
 
@@ -124,4 +134,5 @@ def change_amount(isDouble):
         else:
             ingredient_step = original_step.replace(original_amount, new_amount)
         ingredient_steps.append(ingredient_step)
-    return ingredient_steps
+    global_vars.ingredients = ingredient_steps
+    global_vars.parsed_ingredients = global_vars.dp.parse_ingredients(ingredient_steps)
